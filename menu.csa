@@ -1,0 +1,414 @@
+//Compiled using RAGE-C by Tustin 6/13/2017
+:__script_entry__
+Function 0 2 0
+//Auto assigning 25 statics
+Push_0
+StaticSet1 0 //currentMenu
+Push_0
+StaticSet1 1 //currentOption
+Push_0
+StaticSet1 2 //open
+Push_0
+StaticSet1 3 //currentMenuHeight
+Push_0
+StaticSet1 4 //lastButtonPress
+Push1 200
+StaticSet1 5 //buttonPressDelay
+Push_2
+StaticSet1 6 //SCRIPT_COUNT
+Push_2
+StaticSet1 7 //scriptNames
+PushString "ap ii intense"
+Push_0
+pStatic1 7 //&scriptNames
+ArraySet1 1
+PushString "Console Trainer"
+Push_1
+pStatic1 7 //&scriptNames
+ArraySet1 1
+Push_2
+StaticSet1 10 //scriptFiles
+PushString "rock_menu1"
+Push_0
+pStatic1 10 //&scriptFiles
+ArraySet1 1
+PushString "console_trainer_v"
+Push_1
+pStatic1 10 //&scriptFiles
+ArraySet1 1
+Push_2
+StaticSet1 13 //scriptStatus
+Push_0
+Push_0
+pStatic1 13 //&scriptStatus
+ArraySet1 1
+Push_0
+Push_1
+pStatic1 13 //&scriptStatus
+ArraySet1 1
+Push1 191
+StaticSet1 16 //Buttons_Button_Back
+Push1 192
+StaticSet1 17 //Buttons_Button_Triangle
+Push1 193
+StaticSet1 18 //Buttons_Button_Cross
+Push1 194
+StaticSet1 19 //Buttons_Button_Square
+Push1 195
+StaticSet1 20 //Buttons_Button_Circle
+Push1 196
+StaticSet1 21 //Buttons_Button_L1
+Push1 197
+StaticSet1 22 //Buttons_Button_R1
+Push1 198
+StaticSet1 23 //Buttons_Button_L2
+Push1 199
+StaticSet1 24 //Buttons_Button_R2
+Push1 200
+StaticSet1 25 //Buttons_Button_L3
+Push1 201
+StaticSet1 26 //Buttons_Button_R3
+Push1 202
+StaticSet1 27 //Buttons_Dpad_Up
+Push1 203
+StaticSet1 28 //Buttons_Dpad_Down
+Push1 204
+StaticSet1 29 //Buttons_Dpad_Left
+Push1 205
+StaticSet1 30 //Buttons_Dpad_Right
+Call @main
+Return 0 0
+
+:draw_text
+Function 5 12 0
+GetF1 1 //font
+CallNative SET_TEXT_FONT 1 0
+GetF1 4 //size
+GetF1 4 //size
+CallNative SET_TEXT_SCALE 2 0
+Push1 255
+Push1 255
+Push1 255
+Push1 255
+CallNative SET_TEXT_COLOUR 4 0
+CallNative SET_TEXT_OUTLINE 0 0
+PushString "STRING"
+CallNative BEGIN_TEXT_COMMAND_DISPLAY_TEXT 1 0
+GetF1 0 //text
+CallNative ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME 1 0
+GetF1 2 //x
+GetF1 3 //y
+CallNative END_TEXT_COMMAND_DISPLAY_TEXT 2 0
+Return 5 0
+
+:show_notification
+Function 1 4 0
+PushString "STRING"
+CallNative BEGIN_TEXT_COMMAND_PRINT 1 0
+GetF1 0 //message
+CallNative ADD_TEXT_COMPONENT_SUBSTRING_PLAYER_NAME 1 0
+PushS 2000
+Push_1
+CallNative END_TEXT_COMMAND_PRINT 2 0
+Return 1 0
+
+:draw_menu_title
+Function 1 4 0
+GetF1 0 //title
+Push_1
+Fpush 0.779844
+Fpush 0.191832
+Fpush 0.7
+Call @draw_text
+Return 1 0
+
+:draw_menu_option
+Function 2 7 0
+GetF1 1 //index
+Fpush 0.026094
+Mult
+SetF1 5 //temp
+GetF1 0 //option
+Push_2
+Fpush 0.729657
+Fpush 0.256478
+GetF1 5 //temp
+Add
+Fpush 0.4375
+Call @draw_text
+Return 2 0
+
+:draw_background
+Function 1 5 0
+GetF1 0 //items
+ItoF
+Fpush 0.026094
+Mult
+Fpush 0.030943
+Add
+SetF1 4 //tmpHeight
+Fpush 0.840576
+GetF1 4 //tmpHeight
+Fpush 0.5
+Mult
+Fpush 0.249766
+GetF1 4 //tmpHeight
+Push_0
+Push_0
+Push_0
+Push1 255
+CallNative DRAW_RECT 8 0
+Return 1 0
+
+:draw_menu_items
+Function 0 3 0
+Push_0
+SetF1 3 //i
+
+:for_0
+GetF1 3 //i
+pStatic1 7 //&scriptNames
+ArrayGet1 1
+GetF1 3 //i
+Call @draw_menu_option
+GetF1 3 //i
+Add1 1
+SetF1 3 //i
+GetF1 3 //i
+StaticGet1 6 //SCRIPT_COUNT
+JumpLT @for_0
+
+:for_0_end
+Return 0 0
+
+:draw_menu
+Function 0 2 0
+PushString "Goy Mod Loader"
+Call @draw_menu_title
+Push_2
+Call @draw_background
+Call @draw_menu_items
+Return 0 0
+
+:delayed_key_press
+Function 1 4 0
+CallNative GET_GAME_TIMER 0 1
+StaticGet1 4 //lastButtonPress
+Sub
+StaticGet1 5 //buttonPressDelay
+JumpGE @selection_end_0
+Push_0
+Return 1 1
+Jump @selection_end_0
+
+:selection_end_0
+Push_2
+GetF1 0 //control
+CallNative IS_DISABLED_CONTROL_PRESSED 2 1
+JumpFalse @selection_end_1
+CallNative GET_GAME_TIMER 0 1
+StaticSet1 4 //lastButtonPress
+Push_1
+Return 1 1
+Jump @selection_end_1
+
+:selection_end_1
+Push_0
+Return 1 1
+
+:run_script
+Function 1 5 0
+GetF1 0 //name
+CallNative DOES_SCRIPT_EXIST 1 1
+Not
+JumpFalse @selection_end_2
+PushString "run_script: Script doesn't exist"
+Call @show_notification
+Return 1 0
+Jump @selection_end_2
+
+:selection_end_2
+GetF1 0 //name
+Call @show_notification
+
+:while_0
+GetF1 0 //name
+CallNative HAS_SCRIPT_LOADED 1 1
+Not
+JumpFalse @while_0_end
+GetF1 0 //name
+CallNative REQUEST_SCRIPT 1 0
+Push_0
+CallNative WAIT 1 0
+Jump @while_0
+
+:while_0_end
+PushString "done"
+Call @show_notification
+GetF1 0 //name
+PushS 1024
+CallNative START_NEW_SCRIPT 2 1
+SetF1 4 //nothing
+GetF1 0 //name
+CallNative SET_SCRIPT_AS_NO_LONGER_NEEDED 1 0
+PushString "Loaded script"
+Call @show_notification
+Return 1 0
+
+:unload_script
+Function 1 4 0
+GetF1 0 //name
+CallNative DOES_SCRIPT_EXIST 1 1
+Not
+JumpFalse @selection_end_3
+PushString "unload_script: Script doesn't exist"
+Call @show_notification
+Return 1 0
+Jump @selection_end_3
+
+:selection_end_3
+GetF1 0 //name
+CallNative TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME 1 0
+PushString "Terminated script"
+Call @show_notification
+Return 1 0
+
+:handle_input
+Function 0 3 0
+StaticGet1 28 //Buttons_Dpad_Down
+Call @delayed_key_press
+Push_1
+JumpNE @selection_else_4
+PushString "pressed down"
+Call @show_notification
+StaticGet1 1 //currentOption
+Add1 1
+StaticSet1 1 //currentOption
+StaticGet1 1 //currentOption
+StaticGet1 6 //SCRIPT_COUNT
+JumpLT @selection_end_5
+Push_0
+StaticSet1 1 //currentOption
+PushString "reset"
+Call @show_notification
+Jump @selection_end_5
+
+:selection_end_5
+Jump @selection_end_4
+
+:selection_else_4
+StaticGet1 27 //Buttons_Dpad_Up
+Call @delayed_key_press
+Push_1
+JumpNE @selection_else_6
+PushString "pressed up"
+Call @show_notification
+StaticGet1 1 //currentOption
+Push_1
+Sub
+StaticSet1 1 //currentOption
+StaticGet1 1 //currentOption
+Push_0
+JumpGE @selection_end_7
+StaticGet1 6 //SCRIPT_COUNT
+StaticSet1 1 //currentOption
+PushString "reset"
+Call @show_notification
+Jump @selection_end_7
+
+:selection_end_7
+Jump @selection_end_6
+
+:selection_else_6
+StaticGet1 18 //Buttons_Button_Cross
+Call @delayed_key_press
+Push_1
+JumpNE @selection_else_8
+PushString "pressed x"
+Call @show_notification
+StaticGet1 1 //currentOption
+pStatic1 10 //&scriptFiles
+ArrayGet1 1
+SetF1 3 //script
+StaticGet1 1 //currentOption
+pStatic1 13 //&scriptStatus
+ArrayGet1 1
+Push_1
+JumpNE @selection_else_9
+GetF1 3 //script
+Call @unload_script
+Jump @selection_end_9
+
+:selection_else_9
+GetF1 3 //script
+Call @run_script
+Jump @selection_end_9
+
+:selection_end_9
+Jump @selection_end_8
+
+:selection_else_8
+StaticGet1 20 //Buttons_Button_Circle
+Call @delayed_key_press
+Push_1
+JumpNE @selection_end_10
+Push_0
+StaticSet1 2 //open
+PushString "closed"
+Call @show_notification
+Jump @selection_end_10
+
+:selection_end_10
+Jump @selection_end_8
+
+:selection_end_8
+Jump @selection_end_6
+
+:selection_end_6
+Jump @selection_end_4
+
+:selection_end_4
+Return 0 0
+
+:main
+Function 0 2 0
+
+:while_1
+Push_1
+StaticGet1 2 //open
+Not
+JumpFalse @selection_else_11
+Push_2
+Push1 204
+CallNative IS_DISABLED_CONTROL_PRESSED 2 1
+Push_2
+Push1 201
+CallNative IS_DISABLED_CONTROL_PRESSED 2 1
+And
+JumpFalse @selection_end_12
+Push_1
+StaticSet1 2 //open
+Push_0
+StaticSet1 0 //currentMenu
+Push_0
+StaticSet1 1 //currentOption
+CallNative GET_GAME_TIMER 0 1
+StaticSet1 4 //lastButtonPress
+Jump @selection_end_12
+
+:selection_end_12
+Jump @selection_end_11
+
+:selection_else_11
+Call @draw_menu
+Call @handle_input
+Jump @selection_end_11
+
+:selection_end_11
+Push_0
+CallNative WAIT 1 0
+Jump @while_1
+
+:while_1_end
+Return 0 0
+
