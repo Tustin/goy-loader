@@ -11,8 +11,10 @@ void draw_menu_items() {
 //Draws menu and the items
 void draw_menu() {
     draw_menu_title("Goy Mod Loader");
+    draw_header();
     draw_background(SCRIPT_COUNT);
     draw_menu_items();
+    draw_scroll();
 }
 
 //Returns whether a key has been pressed while accounting for the last button press delay
@@ -38,12 +40,10 @@ void run_script(string name) {
 
     while(!HAS_SCRIPT_LOADED(name)) {
         REQUEST_SCRIPT(name);
-        //show_notification("looping");
         WAIT(0);
     }
 
     show_notification("done");
-    //return;
 
     int nothing = START_NEW_SCRIPT(name, 1024);
     SET_SCRIPT_AS_NO_LONGER_NEEDED(name);
@@ -73,7 +73,7 @@ void handle_input() {
         show_notification("pressed up");
         currentOption--;
         if (currentOption < 0) {
-            currentOption = SCRIPT_COUNT;
+            currentOption = SCRIPT_COUNT - 1;
             show_notification("reset");
         }
     } else if (delayed_key_press(Buttons.Button_Cross) == true) {
@@ -89,8 +89,6 @@ void handle_input() {
         show_notification("closed");
     }
 }
-
-
 
 void main() {
     while (true) {

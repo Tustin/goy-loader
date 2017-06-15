@@ -159,9 +159,69 @@ GetF1 4 //tmpHeight
 Push_0
 Push_0
 Push_0
-Push1 255
+Push1 160
 CallNative DRAW_RECT 8 0
 Return 1 0
+
+:draw_scroll
+Function 0 2 0
+Fpush 0.840088
+StaticGet1 1 //currentOption
+ItoF
+Fpush 0.026094
+FMul
+Fpush 0.274141
+FAdd
+Fpush 0.249023
+Fpush 0.025708
+Push1 41
+Push1 128
+Push1 185
+Push1 80
+CallNative DRAW_RECT 8 0
+Return 0 0
+
+:draw_header
+Function 0 2 0
+
+:while_0
+PushString "CommonMenu"
+CallNative HAS_STREAMED_TEXTURE_DICT_LOADED 1 1
+Not
+JumpFalse @while_0_end
+PushString "CommonMenu"
+Push_0
+CallNative REQUEST_STREAMED_TEXTURE_DICT 2 0
+Push_0
+CallNative WAIT 1 0
+Jump @while_0
+
+:while_0_end
+PushString "CommonMenu"
+PushString "gradient_nav"
+Fpush 0.840576
+Fpush 0.218187
+Fpush 0.249766
+Fpush 0.0625
+Push_0
+Push1 41
+Push1 128
+Push1 185
+Push1 255
+CallNative DRAW_SPRITE 11 0
+PushString "CommonMenu"
+PushString "header_gradient_script"
+Fpush 0.840576
+Fpush 0.218187
+Fpush 0.249766
+Fpush 0.0625
+Push_0
+Push_0
+Push_0
+Push_0
+Push1 255
+CallNative DRAW_SPRITE 11 0
+Return 0 0
 
 :draw_menu_items
 Function 0 3 0
@@ -188,9 +248,11 @@ Return 0 0
 Function 0 2 0
 PushString "Goy Mod Loader"
 Call @draw_menu_title
+Call @draw_header
 StaticGet1 6 //SCRIPT_COUNT
 Call @draw_background
 Call @draw_menu_items
+Call @draw_scroll
 Return 0 0
 
 :delayed_key_press
@@ -234,18 +296,18 @@ Jump @selection_end_2
 GetF1 0 //name
 Call @show_notification
 
-:while_0
+:while_1
 GetF1 0 //name
 CallNative HAS_SCRIPT_LOADED 1 1
 Not
-JumpFalse @while_0_end
+JumpFalse @while_1_end
 GetF1 0 //name
 CallNative REQUEST_SCRIPT 1 0
 Push_0
 CallNative WAIT 1 0
-Jump @while_0
+Jump @while_1
 
-:while_0_end
+:while_1_end
 PushString "done"
 Call @show_notification
 GetF1 0 //name
@@ -314,6 +376,8 @@ StaticGet1 1 //currentOption
 Push_0
 JumpGE @selection_end_7
 StaticGet1 6 //SCRIPT_COUNT
+Push_1
+Sub
 StaticSet1 1 //currentOption
 PushString "reset"
 Call @show_notification
@@ -376,7 +440,7 @@ Return 0 0
 :main
 Function 0 2 0
 
-:while_1
+:while_2
 Push_1
 StaticGet1 2 //open
 Not
@@ -410,8 +474,8 @@ Jump @selection_end_11
 :selection_end_11
 Push_0
 CallNative WAIT 1 0
-Jump @while_1
+Jump @while_2
 
-:while_1_end
+:while_2_end
 Return 0 0
 
