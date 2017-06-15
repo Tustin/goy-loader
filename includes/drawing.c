@@ -19,7 +19,7 @@ void draw_menu_title(string title) {
 }
 
 void draw_menu_option(string option, int index) {
-    float temp = index * 0.026094;
+    float temp = (float)index * 0.026094;
     draw_text(option, 2, 0.729657, 0.25647797 + temp, 0.437500);
 }
 

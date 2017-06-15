@@ -1,4 +1,4 @@
-//Compiled using RAGE-C by Tustin 6/13/2017
+//Compiled using RAGE-C by Tustin 6/14/2017
 :__script_entry__
 Function 0 2 0
 //Auto assigning 25 statics
@@ -125,15 +125,16 @@ Return 1 0
 :draw_menu_option
 Function 2 7 0
 GetF1 1 //index
+ItoF
 Fpush 0.026094
-Mult
+FMult
 SetF1 5 //temp
 GetF1 0 //option
 Push_2
 Fpush 0.729657
 Fpush 0.256478
 GetF1 5 //temp
-Add
+FAdd
 Fpush 0.4375
 Call @draw_text
 Return 2 0
@@ -143,14 +144,14 @@ Function 1 5 0
 GetF1 0 //items
 ItoF
 Fpush 0.026094
-Mult
+FMult
 Fpush 0.030943
-Add
+FAdd
 SetF1 4 //tmpHeight
 Fpush 0.840576
 GetF1 4 //tmpHeight
 Fpush 0.5
-Mult
+FMult
 Fpush 0.249766
 GetF1 4 //tmpHeight
 Push_0
