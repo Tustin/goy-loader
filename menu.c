@@ -11,7 +11,7 @@ void draw_menu_items() {
 //Draws menu and the items
 void draw_menu() {
     draw_menu_title("Goy Mod Loader");
-    draw_background(2);
+    draw_background(SCRIPT_COUNT);
     draw_menu_items();
 }
 

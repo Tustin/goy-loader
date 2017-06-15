@@ -127,7 +127,7 @@ Function 2 7 0
 GetF1 1 //index
 ItoF
 Fpush 0.026094
-FMult
+FMul
 SetF1 5 //temp
 GetF1 0 //option
 Push_2
@@ -144,14 +144,16 @@ Function 1 5 0
 GetF1 0 //items
 ItoF
 Fpush 0.026094
-FMult
+FMul
 Fpush 0.030943
 FAdd
 SetF1 4 //tmpHeight
 Fpush 0.840576
+Fpush 0.248187
 GetF1 4 //tmpHeight
 Fpush 0.5
-FMult
+FMul
+FAdd
 Fpush 0.249766
 GetF1 4 //tmpHeight
 Push_0
@@ -186,7 +188,7 @@ Return 0 0
 Function 0 2 0
 PushString "Goy Mod Loader"
 Call @draw_menu_title
-Push_2
+StaticGet1 6 //SCRIPT_COUNT
 Call @draw_background
 Call @draw_menu_items
 Return 0 0
