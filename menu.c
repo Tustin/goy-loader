@@ -23,7 +23,7 @@ bool delayed_key_press(int control) {
         return false;
     }
     
-    if (IS_DISABLED_CONTROL_PRESSED(2, control)) {
+    if (IS_DISABLED_CONTROL_PRESSED(2, control) == true) {
         lastButtonPress = GET_GAME_TIMER();
         return true;
     }

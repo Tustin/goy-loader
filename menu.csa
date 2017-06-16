@@ -270,7 +270,8 @@ Jump @selection_end_0
 Push_2
 GetF1 0 //control
 CallNative IS_DISABLED_CONTROL_PRESSED 2 1
-JumpFalse @selection_end_1
+Push_1
+JumpNE @selection_end_1
 CallNative GET_GAME_TIMER 0 1
 StaticSet1 4 //lastButtonPress
 Push_1
