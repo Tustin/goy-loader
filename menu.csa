@@ -1,4 +1,4 @@
-//Compiled using RAGE-C by Tustin 6/14/2017
+//Compiled using RAGE-C by Tustin 6/15/2017
 :__script_entry__
 Function 0 2 0
 //Auto assigning 25 statics
@@ -15,37 +15,37 @@ StaticSet1 4 //lastButtonPress
 Push1 200
 StaticSet1 5 //buttonPressDelay
 Push_2
-StaticSet1 6 //SCRIPT_COUNT
-Push_2
-StaticSet1 7 //scriptNames
+StaticSet1 6 //scriptNames
 PushString "ap ii intense"
 Push_0
-pStatic1 7 //&scriptNames
+pStatic1 6 //&scriptNames
 ArraySet1 1
 PushString "Console Trainer"
 Push_1
-pStatic1 7 //&scriptNames
+pStatic1 6 //&scriptNames
 ArraySet1 1
 Push_2
-StaticSet1 10 //scriptFiles
+StaticSet1 9 //scriptFiles
 PushString "rock_menu1"
 Push_0
-pStatic1 10 //&scriptFiles
+pStatic1 9 //&scriptFiles
 ArraySet1 1
 PushString "console_trainer_v"
 Push_1
-pStatic1 10 //&scriptFiles
+pStatic1 9 //&scriptFiles
 ArraySet1 1
 Push_2
-StaticSet1 13 //scriptStatus
+StaticSet1 12 //scriptStatus
 Push_0
 Push_0
-pStatic1 13 //&scriptStatus
+pStatic1 12 //&scriptStatus
 ArraySet1 1
 Push_0
 Push_1
-pStatic1 13 //&scriptStatus
+pStatic1 12 //&scriptStatus
 ArraySet1 1
+Push_2
+StaticSet1 15 //SCRIPT_COUNT
 Push1 191
 StaticSet1 16 //Buttons_Button_Back
 Push1 192
@@ -230,7 +230,7 @@ SetF1 3 //i
 
 :for_0
 GetF1 3 //i
-pStatic1 7 //&scriptNames
+pStatic1 6 //&scriptNames
 ArrayGet1 1
 GetF1 3 //i
 Call @draw_menu_option
@@ -238,7 +238,7 @@ GetF1 3 //i
 Add1 1
 SetF1 3 //i
 GetF1 3 //i
-StaticGet1 6 //SCRIPT_COUNT
+StaticGet1 15 //SCRIPT_COUNT
 JumpLT @for_0
 
 :for_0_end
@@ -249,7 +249,7 @@ Function 0 2 0
 PushString "Goy Mod Loader"
 Call @draw_menu_title
 Call @draw_header
-StaticGet1 6 //SCRIPT_COUNT
+StaticGet1 15 //SCRIPT_COUNT
 Call @draw_background
 Call @draw_menu_items
 Call @draw_scroll
@@ -350,7 +350,7 @@ StaticGet1 1 //currentOption
 Add1 1
 StaticSet1 1 //currentOption
 StaticGet1 1 //currentOption
-StaticGet1 6 //SCRIPT_COUNT
+StaticGet1 15 //SCRIPT_COUNT
 JumpLT @selection_end_5
 Push_0
 StaticSet1 1 //currentOption
@@ -375,7 +375,7 @@ StaticSet1 1 //currentOption
 StaticGet1 1 //currentOption
 Push_0
 JumpGE @selection_end_7
-StaticGet1 6 //SCRIPT_COUNT
+StaticGet1 15 //SCRIPT_COUNT
 Push_1
 Sub
 StaticSet1 1 //currentOption
@@ -394,11 +394,11 @@ JumpNE @selection_else_8
 PushString "pressed x"
 Call @show_notification
 StaticGet1 1 //currentOption
-pStatic1 10 //&scriptFiles
+pStatic1 9 //&scriptFiles
 ArrayGet1 1
 SetF1 3 //script
 StaticGet1 1 //currentOption
-pStatic1 13 //&scriptStatus
+pStatic1 12 //&scriptStatus
 ArrayGet1 1
 Push_1
 JumpNE @selection_else_9

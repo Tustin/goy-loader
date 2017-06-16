@@ -6,12 +6,14 @@ static int currentMenuHeight;
 static int lastButtonPress = 0;
 static int buttonPressDelay = 200; //I used this in The Tesseract
 
-static int SCRIPT_COUNT = 2;
 
 //Menus
 static string scriptNames[] = {"ap ii intense", "Console Trainer"}; 
 static string scriptFiles[] = {"rock_menu1", "console_trainer_v"}; 
 static bool scriptStatus[] = {false, false};
+
+static int SCRIPT_COUNT = sizeof(scriptNames);
+
 
 //Thx Joren
 enum Buttons
